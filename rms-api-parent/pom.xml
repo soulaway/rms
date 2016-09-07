@@ -1,0 +1,189 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.github.soulaway</groupId>
+		<artifactId>rms</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>rms-api-parent</artifactId>
+	<packaging>pom</packaging>
+	<modules>
+		<module>rms-api-service</module>
+	</modules>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<swagger-annotations-version>1.5.0</swagger-annotations-version>
+		<version.swagger-plugin>2.2.0</version.swagger-plugin> <!-- 2.2.0 -->
+		<jersey-version>2.12</jersey-version>
+		<jackson-version>2.4.2</jackson-version>
+		<jodatime-version>2.3</jodatime-version>
+		<maven-plugin-version>1.0.0</maven-plugin-version>
+		<version.junit>4.11</version.junit>
+
+		<resource.directory>src/main/resources</resource.directory>
+		<swagged.api.resources>target/generated-sources/swagger</swagged.api.resources>
+		<swagged.api.genpath>src/gen/java/main</swagged.api.genpath>
+		<swagged.json.api.api-filename>swagger.json</swagged.json.api.api-filename>
+
+		<!-- should be overrided by parents -->
+		<swagged.api-filename></swagged.api-filename>
+		<swagged.api.api-codegen-path></swagged.api.api-codegen-path>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- dependencies are needed for the client being generated -->
+			<dependency>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-annotations</artifactId>
+				<version>${swagger-annotations-version}</version>
+			</dependency>
+			
+			<!-- codehaus Jackson  -->
+	 		<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-core-asl</artifactId>
+				<version>1.9.13</version>
+			</dependency>
+
+	<!-- useful for swagger generation language=jaxrs (jersey)-->
+	
+			<!-- JSON processing: jackson -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-joda</artifactId>
+				<version>2.1.5</version>
+			</dependency>
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${jodatime-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.4</version>
+				<scope>test</scope>
+			</dependency>
+	
+			<!-- Base64 encoding that works in both JVM and Android -->
+			<dependency>
+				<groupId>com.brsanthu</groupId>
+				<artifactId>migbase64</artifactId>
+				<version>2.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sun.jersey.contribs</groupId>
+				<artifactId>jersey-multipart</artifactId>
+				<version>1.18.1</version>
+			</dependency>
+ 
+<!--
+ 			<dependency>
+			    <groupId>org.glassfish.jersey.media</groupId>
+			    <artifactId>jersey-media-multipart</artifactId>
+			    <version>2.22</version>
+			</dependency>
+ -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.1.0</version>
+			</dependency>
+	
+		<!-- test dependencies -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>4.2.5.RELEASE</version>
+				<scope>test</scope>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>4.2.5.RELEASE</version>
+				<scope>test</scope>
+			</dependency>
+	
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${version.junit}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+	
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<excludes>
+							<exclude>**/rest/api/factories/*</exclude>
+							<exclude>**/rest/api/impl/*</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+	
+				<!-- recompilation of the API after the model XML binding patch-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>recompile-api</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>compile</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+	
+				<plugin>
+					<groupId>io.swagger</groupId>
+					<artifactId>swagger-codegen-maven-plugin</artifactId>
+					<version>${version.swagger-plugin}</version>
+					<executions>
+						<execution>
+							<id>generate-ui-json-schema</id>
+							<phase>initialize</phase>
+							<goals>
+								<goal>generate</goal>
+							</goals>
+							<configuration>
+								<!-- specify the swagger yaml -->
+								<inputSpec>${basedir}/${resource.directory}/${swagged.api-filename}</inputSpec>
+								<!-- target to generate -->
+								<language>swagger</language>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

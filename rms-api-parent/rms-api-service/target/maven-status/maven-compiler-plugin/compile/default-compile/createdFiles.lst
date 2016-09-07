@@ -1,0 +1,7 @@
+com/github/soulaway/shared/rest/api/IndexesApi.class
+com/github/soulaway/shared/rest/model/Error.class
+com/github/soulaway/shared/rest/model/Forecast.class
+com/github/soulaway/shared/rest/model/Index.class
+com/github/soulaway/shared/rest/model/Indexes.class
+com/github/soulaway/shared/rest/model/SimilarDay.class
+com/github/soulaway/shared/rest/api/SimilarDayApi.class
