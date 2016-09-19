@@ -1,0 +1,15 @@
+archetype.artifactId=rms-api-archetype
+archetype.languages=java
+archetype.filteredExtensions=java,yaml,xml,properties,html
+
+package=com.github.soulaway
+groupId=com.github.soulaway
+artifactId=rms-api-parent
+version=0.0.1-SNAPSHOT
+
+#custom properties
+artifactIdWithDash=forecast-engine
+artifactIdWithPoint=forecast.engine
+shortArtifactIdWithDash=fe-
+
+

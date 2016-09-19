@@ -5,10 +5,10 @@
     <artifactId>rms-api-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>rms-api-service</artifactId>
+  <artifactId>rms-api</artifactId>
 	<properties>
-		<!-- expected at  -->
-		<swagged.api-filename>forecast-engine-api.yaml</swagged.api-filename>
+		<!-- API yaml name -->
+		<swagged.api-filename>twitter.yaml</swagged.api-filename>
 		
 		<!-- testing property -->
 		<swagged.api.api-codegen-path>

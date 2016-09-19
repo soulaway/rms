@@ -9,7 +9,7 @@
 	<artifactId>rms-api-parent</artifactId>
 	<packaging>pom</packaging>
 	<modules>
-		<module>rms-api-service</module>
+		<module>rms-api</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -94,14 +94,6 @@
 				<artifactId>jersey-multipart</artifactId>
 				<version>1.18.1</version>
 			</dependency>
- 
-<!--
- 			<dependency>
-			    <groupId>org.glassfish.jersey.media</groupId>
-			    <artifactId>jersey-media-multipart</artifactId>
-			    <version>2.22</version>
-			</dependency>
- -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
@@ -162,7 +154,7 @@
 						</execution>
 					</executions>
 				</plugin>
-	
+				<!-- generates the json schema and attaches it as api resource -->
 				<plugin>
 					<groupId>io.swagger</groupId>
 					<artifactId>swagger-codegen-maven-plugin</artifactId>

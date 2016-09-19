@@ -1,0 +1,22 @@
+1. Creating and installing
+navigate to tforecast-parent\forecastengine
+    mvn archetype:create-from-project -Darchetype.properties=archetype/archetype.properties
+    xcopy archetype\archetype-metadata.xml target\generated-sources\archetype\src\main\resources\META-INF\maven /Y
+    cd target\generated-sources\archetype
+    mvn clean install
+now archetype generated and installed with name servicetemplate
+
+2. Using
+navigate to folder where service should be generated
+    mvn archetype:generate -DarchetypeCatalog=local
+choose necessary archetype from list(servicetemplate)
+
+During generating enter  new module params.
+Example:
+groupId=new.group.id
+artifactId=newservice
+version=0.0.1-SNAPSHOT
+package=new.group.id
+artifactIdWithDash=new-service
+artifactIdWithPoint=new.service
+shortArtifactIdWithDash=ns-
